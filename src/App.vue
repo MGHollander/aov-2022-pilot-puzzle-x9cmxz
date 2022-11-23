@@ -1,7 +1,8 @@
 <script setup>
 import { reactive, ref } from 'vue'
 
-const turn = ref('X')
+let starter = 'X'
+const turn = ref(starter)
 const steps = reactive({
   X : [],
   O : [],
@@ -9,15 +10,17 @@ const steps = reactive({
 const winner = ref(null)
 
 const check = (player) => {
+  const playerSteps = steps[player]
+
   if (
-       (steps[player].includes(1) && steps[player].includes(2) && steps[player].includes(3))
-    || (steps[player].includes(4) && steps[player].includes(5) && steps[player].includes(6))
-    || (steps[player].includes(7) && steps[player].includes(8) && steps[player].includes(9))
-    || (steps[player].includes(1) && steps[player].includes(4) && steps[player].includes(7))
-    || (steps[player].includes(2) && steps[player].includes(5) && steps[player].includes(8))
-    || (steps[player].includes(3) && steps[player].includes(6) && steps[player].includes(9))
-    || (steps[player].includes(1) && steps[player].includes(5) && steps[player].includes(9))
-    || (steps[player].includes(3) && steps[player].includes(5) && steps[player].includes(7)) 
+       (playerSteps.includes(1) && playerSteps.includes(2) && playerSteps.includes(3))
+    || (playerSteps.includes(4) && playerSteps.includes(5) && playerSteps.includes(6))
+    || (playerSteps.includes(7) && playerSteps.includes(8) && playerSteps.includes(9))
+    || (playerSteps.includes(1) && playerSteps.includes(4) && playerSteps.includes(7))
+    || (playerSteps.includes(2) && playerSteps.includes(5) && playerSteps.includes(8))
+    || (playerSteps.includes(3) && playerSteps.includes(6) && playerSteps.includes(9))
+    || (playerSteps.includes(1) && playerSteps.includes(5) && playerSteps.includes(9))
+    || (playerSteps.includes(3) && playerSteps.includes(5) && playerSteps.includes(7)) 
   ) {
     winner.value = player;
   }
@@ -41,7 +44,7 @@ const click = (event, cell) => {
 
 const reset = () => {
   winner.value = null
-  turn.value = 'X'
+  starter = turn.value = starter === 'X' ? 'O' : 'X'
   steps.X = []
   steps.O = []
 }
